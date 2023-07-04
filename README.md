@@ -1,5 +1,8 @@
 # Official Docker container for Plex Media Server
 
+## This fork is meant to build armv7 docker image using GitHub actions and push to DockerHub
+Only addition is the `.github/workflows`
+
 # plexinc/pms-docker
 
 With our easy-to-install Plex Media Server software and your Plex apps, available on all your favorite phones, tablets, streaming devices, gaming consoles, and smart TVs, you can stream your video, music, and photo collections any time, anywhere, to any device.

@@ -1,0 +1,42 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ main ]
+  schedule:
+    - cron: "0 4 * * *"
+  workflow_dispatch:
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+  
+    - name: Login to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_HUB_USERNAME }}
+        password: ${{ secrets.DOCKER_HUB_DEPLOY_KEY }}
+        
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v2
+      
+    - name: Set up Docker Buildx
+      id: buildx
+      uses: docker/setup-buildx-action@v2
+      
+    - name: Build
+      id: build
+      env:
+        DOCKER_USER: ${{ secrets.DOCKER_HUB_USERNAME }}
+      run: |
+        docker buildx build \
+          --tag "${DOCKER_USER}/pms-docker:latest" \
+          --platform=linux/arm/v7 \
+          --push \
+          -f Dockerfile.armv7 .

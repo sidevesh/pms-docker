@@ -1,0 +1,29 @@
+name: Pull upstream updates
+
+on:
+  schedule:
+    - cron: "23 23 23 * *"
+  workflow_dispatch:
+
+jobs:
+  pull-upstream-updates:
+    runs-on: ubuntu-latest
+    steps:
+      - 
+        name: Pull upstream updates
+        env:
+          GITHUB_TOKEN: ${{ secrets.PUSH_TOKEN }}
+          REPOSITORY_NAME: pms-docker
+          REPOSITORY_BRANCH: master
+          UPSTREAM_REPOSITORY_OWNER: plexinc
+        run: |
+          UPSTREAM_REPOSITORY_URL=https://github.com/${UPSTREAM_REPOSITORY_OWNER}/${REPOSITORY_NAME}.git
+          REPOSITORY_URL=https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY_OWNER}/${REPOSITORY_NAME}.git
+          git clone ${REPOSITORY_URL} ${REPOSITORY_NAME}
+          cd ${REPOSITORY_NAME}
+          git remote add upstream ${UPSTREAM_REPOSITORY_URL}
+          git fetch upstream
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Action Bot"
+          git merge upstream/${REPOSITORY_BRANCH}
+          git push origin ${REPOSITORY_BRANCH}
