@@ -2,7 +2,7 @@ name: Pull upstream updates
 
 on:
   schedule:
-    - cron: "23 23 23 * *"
+    - cron: "0 3 * * *"
   workflow_dispatch:
 
 jobs:
