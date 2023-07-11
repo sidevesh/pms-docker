@@ -1,7 +1,7 @@
 # plex-media-server Chart
 ===========
 
-A Helm chart for deploying the a Plex Personal Media Server(PMS) server.
+A Helm chart for deploying the Plex Personal Media Server(PMS) server.
 
 While Plex is responsible for maintaining this Helm chart, we cannot provide support for troubleshooting related to its usage. For community assistance, please visit our [support forums](https://forums.plex.tv/).
 
@@ -39,6 +39,7 @@ However, this one _does_ require that two commands are run manually once the ini
 2. Once the file is uploaded copy rename it on the pod to the correct name that will be processed `kubectl exec -n <namespace> --stdin --tty <pod>  -c <release name>-pms-chart-pms-init h  -- mv /pms.tgz.up /pms.tgz`
 
 The file is being uploaded with a temporary name so that the script does not start trying to unpack the database until it has finished uploading.
+
 ```sh
 #!/bin/sh
 echo "waiting for pre-existing pms database to uploaded..."
