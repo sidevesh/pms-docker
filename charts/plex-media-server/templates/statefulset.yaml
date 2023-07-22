@@ -19,6 +19,7 @@ spec:
       labels:
         {{- include "pms-chart.labels" . | nindent 8 }}
     spec:
+      serviceAccountName: {{ include "pms-chart.serviceAccountName" . }}
       tolerations:
         {{- toYaml .Values.tolerations | nindent 8 }}
       nodeSelector:
@@ -93,7 +94,7 @@ spec:
         env:
         {{- if .Values.ingress.enabled }}
         - name: ADVERTISE_IP
-          value: {{ trimPrefix "https://" .Values.ingress.url }}
+          value: {{ .Values.ingress.url }}:443
         {{- end }}
         {{- range $key, $value := .Values.extraEnv }}
         - name: {{ $key }}
@@ -143,7 +144,7 @@ spec:
         lifecycle:
           preStop:
             exec:
-              command: ["/bin/sh","-c","fusermount -uz /data/{{ (split ":" .)._0 }}"]
+              command: ["/bin/sh","-c","fusermount3 -uz /data/{{ (split ":" .)._0 }}"]
         securityContext:
           privileged: true
           capabilities:
