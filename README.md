@@ -1,7 +1,10 @@
 # Official Docker container for Plex Media Server
 
-## This fork is meant to build armv7 docker image using GitHub actions and push to DockerHub
+## This fork is meant to build arm64 docker image using GitHub actions and push to DockerHub
 Only addition is the `.github/workflows` directory
+
+This used to build armv7 images but I have since migrated to arm64 so won't be able to maintain that anymore.
+If anyone stumbles across this and needs armv7 back, feel free to fork from the older commits.
 
 Available at https://hub.docker.com/r/sidevesh/pms-docker
 
