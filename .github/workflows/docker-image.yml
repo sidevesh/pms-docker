@@ -35,6 +35,6 @@ jobs:
       run: |
         docker buildx build \
           --tag "${DOCKER_USER}/pms-docker:latest" \
-          --platform=linux/arm/v7 \
+          --platform=linux/arm64 \
           --push \
-          -f Dockerfile.armv7 .
+          -f Dockerfile.arm64 .
